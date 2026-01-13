@@ -7,7 +7,7 @@ Allows benchmark runners to interact with runtime components in a standardized w
 
 from typing import Any, Optional
 
-from sage.libs.agentic.agents.runtime.orchestrator import Orchestrator
+from sage_agentic.agents.runtime.orchestrator import Orchestrator
 
 
 class BenchmarkAdapter:

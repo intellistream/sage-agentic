@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
-from sage.libs.agentic.intent import IntentClassifier, IntentResult, UserIntent
+from sage_agentic.intent import IntentClassifier, IntentResult, UserIntent
 
 
 class WorkflowRoute(str, Enum):

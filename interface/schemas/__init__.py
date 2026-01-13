@@ -4,12 +4,12 @@ Re-exports schemas from existing modules for cleaner imports.
 """
 
 # Use absolute imports
-from sage.libs.agentic.agents.action.tool_selection.schemas import (
+from sage_agentic.agents.action.tool_selection.schemas import (
     SelectorConfig,
     ToolPrediction,
     ToolSelectionQuery,
 )
-from sage.libs.agentic.agents.planning.schemas import (
+from sage_agentic.agents.planning.schemas import (
     PlanRequest,
     PlanResult,
     PlanStep,

@@ -12,7 +12,7 @@ def test_planner_registry():
     print("Testing Planner Registry")
     print("=" * 60)
 
-    from sage.libs.agentic.registry import planner_registry
+    from sage_agentic.registry import planner_registry
 
     # List registered planners
     registered = planner_registry.registered()
@@ -36,7 +36,7 @@ def test_tool_selector_registry():
     print("Testing Tool Selector Registry")
     print("=" * 60)
 
-    from sage.libs.agentic.registry import tool_selector_registry
+    from sage_agentic.registry import tool_selector_registry
 
     # List registered selectors
     registered = tool_selector_registry.registered()
@@ -60,7 +60,7 @@ def test_workflow_registry():
     print("Testing Workflow Registry")
     print("=" * 60)
 
-    from sage.libs.agentic.registry import workflow_registry
+    from sage_agentic.registry import workflow_registry
 
     # List registered optimizers
     registered = workflow_registry.registered()
@@ -84,7 +84,7 @@ def test_interfaces():
     print("Testing Interface Imports")
     print("=" * 60)
 
-    from sage.libs.agentic.interfaces import (
+    from sage_agentic.interfaces import (
         agent,
         planner,
         tool_selector,
@@ -97,7 +97,7 @@ def test_interfaces():
     print(f"✅ workflow module: {len(dir(workflow))} exports")
 
     # Check specific protocols
-    from sage.libs.agentic.interfaces.planner import Planner, PlanningContext
+    from sage_agentic.interfaces.planner import Planner, PlanningContext
 
     print(f"✅ Planner protocol: {Planner}")
     print(f"✅ PlanningContext dataclass: {PlanningContext}")

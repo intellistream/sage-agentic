@@ -3,9 +3,9 @@ from __future__ import annotations
 import logging
 from typing import Any, Generator
 
-from sage.libs.agentic.agents.action.mcp_registry import MCPRegistry
-from sage.libs.agentic.agents.planning.simple_llm_planner import SimpleLLMPlanner
-from sage.libs.agentic.agents.profile.profile import BaseProfile
+from sage_agentic.agents.action.mcp_registry import MCPRegistry
+from sage_agentic.agents.planning.simple_llm_planner import SimpleLLMPlanner
+from sage_agentic.agents.profile.profile import BaseProfile
 
 logger = logging.getLogger(__name__)
 

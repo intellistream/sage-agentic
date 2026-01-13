@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Callable
 
-from sage.libs.agentic.interfaces.planner import Planner
+from sage_agentic.interfaces.planner import Planner
 
 _PLANNER_REGISTRY: dict[str, Callable[..., Planner]] = {}
 

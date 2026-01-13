@@ -9,7 +9,7 @@ Core Components:
 - schemas: Data structures (Pydantic models) for requests/responses
 
 Usage:
-    from sage.libs.agentic.interface import (
+    from sage_agentic.interface import (
         PlannerProtocol, ToolSelectorProtocol, AgentProtocol,
         PlannerRegistry, SelectorRegistry,
         PlanRequest, PlanResult, ToolSelectionQuery

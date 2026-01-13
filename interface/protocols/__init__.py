@@ -7,12 +7,12 @@ from abc import ABC, abstractmethod
 from typing import Any, Optional, Protocol
 
 # Use absolute imports to avoid relative path confusion
-from sage.libs.agentic.agents.action.tool_selection.schemas import (
+from sage_agentic.agents.action.tool_selection.schemas import (
     SelectorConfig,
     ToolPrediction,
     ToolSelectionQuery,
 )
-from sage.libs.agentic.agents.planning.schemas import PlanRequest, PlanResult
+from sage_agentic.agents.planning.schemas import PlanRequest, PlanResult
 
 
 class PlannerProtocol(Protocol):

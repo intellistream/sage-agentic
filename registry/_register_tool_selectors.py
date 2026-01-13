@@ -13,11 +13,11 @@ logger = logging.getLogger(__name__)
 
 def register_builtin_tool_selectors() -> None:
     """Register all built-in tool selector implementations."""
-    from sage.libs.agentic.registry import tool_selector_registry
+    from sage_agentic.registry import tool_selector_registry
 
     # Import selector classes
     try:
-        from sage.libs.agentic.agents.action.tool_selection.keyword_selector import (
+        from sage_agentic.agents.action.tool_selection.keyword_selector import (
             KeywordSelector,
         )
 
@@ -30,7 +30,7 @@ def register_builtin_tool_selectors() -> None:
         logger.debug(f"Could not register KeywordSelector: {e}")
 
     try:
-        from sage.libs.agentic.agents.action.tool_selection.embedding_selector import (
+        from sage_agentic.agents.action.tool_selection.embedding_selector import (
             EmbeddingSelector,
         )
 
@@ -43,7 +43,7 @@ def register_builtin_tool_selectors() -> None:
         logger.debug(f"Could not register EmbeddingSelector: {e}")
 
     try:
-        from sage.libs.agentic.agents.action.tool_selection.hybrid_selector import (
+        from sage_agentic.agents.action.tool_selection.hybrid_selector import (
             HybridSelector,
         )
 
@@ -56,7 +56,7 @@ def register_builtin_tool_selectors() -> None:
         logger.debug(f"Could not register HybridSelector: {e}")
 
     try:
-        from sage.libs.agentic.agents.action.tool_selection.dfsdt_selector import (
+        from sage_agentic.agents.action.tool_selection.dfsdt_selector import (
             DFSDTSelector,
         )
 
@@ -73,7 +73,7 @@ def register_builtin_tool_selectors() -> None:
         logger.debug(f"Could not register DFSDTSelector: {e}")
 
     try:
-        from sage.libs.agentic.agents.action.tool_selection.gorilla_selector import (
+        from sage_agentic.agents.action.tool_selection.gorilla_selector import (
             GorillaSelector,
         )
 

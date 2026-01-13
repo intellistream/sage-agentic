@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Callable
 
-from sage.libs.agentic.interfaces.workflow import WorkflowOptimizer
+from sage_agentic.interfaces.workflow import WorkflowOptimizer
 
 _WORKFLOW_REGISTRY: dict[str, Callable[..., WorkflowOptimizer]] = {}
 

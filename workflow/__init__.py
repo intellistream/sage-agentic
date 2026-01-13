@@ -24,8 +24,8 @@ Two-Phase Workflow:
     User Input → [GENERATION] → Initial Workflow → [OPTIMIZATION] → Final Workflow
 
 Generation Example:
-    >>> from sage.libs.agentic.workflow import GenerationContext
-    >>> from sage.libs.agentic.workflow.generators import LLMWorkflowGenerator
+    >>> from sage_agentic.workflow import GenerationContext
+    >>> from sage_agentic.workflow.generators import LLMWorkflowGenerator
     >>>
     >>> # Generate workflow from natural language
     >>> generator = LLMWorkflowGenerator(model="gpt-4")
@@ -37,8 +37,8 @@ Generation Example:
     >>> workflow = result.visual_pipeline
 
 Optimization Example:
-    >>> from sage.libs.agentic.workflow import WorkflowGraph
-    >>> from sage.libs.agentic.workflow.optimizers import GreedyOptimizer
+    >>> from sage_agentic.workflow import WorkflowGraph
+    >>> from sage_agentic.workflow.optimizers import GreedyOptimizer
     >>>
     >>> # Optimize an existing workflow
     >>> workflow = WorkflowGraph()

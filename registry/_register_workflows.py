@@ -13,11 +13,11 @@ logger = logging.getLogger(__name__)
 
 def register_builtin_workflow_optimizers() -> None:
     """Register all built-in workflow optimizer implementations."""
-    from sage.libs.agentic.registry import workflow_registry
+    from sage_agentic.registry import workflow_registry
 
     # Import optimizer classes (all in optimizers/__init__.py)
     try:
-        from sage.libs.agentic.workflow.optimizers import (
+        from sage_agentic.workflow.optimizers import (
             NoOpOptimizer,
             GreedyOptimizer,
             ParallelizationOptimizer,

@@ -8,16 +8,16 @@ Provides runtime infrastructure for agent execution including:
 - Telemetry: Performance metrics collection
 """
 
-from sage.libs.agentic.agents.runtime.adapters import BenchmarkAdapter
-from sage.libs.agentic.agents.runtime.config import (
+from sage_agentic.agents.runtime.adapters import BenchmarkAdapter
+from sage_agentic.agents.runtime.config import (
     PlannerConfig,
     RuntimeConfig,
     SelectorConfig,
     TelemetryConfig,
     TimingConfig,
 )
-from sage.libs.agentic.agents.runtime.orchestrator import Orchestrator
-from sage.libs.agentic.agents.runtime.telemetry import Telemetry, TelemetryCollector
+from sage_agentic.agents.runtime.orchestrator import Orchestrator
+from sage_agentic.agents.runtime.telemetry import Telemetry, TelemetryCollector
 
 __all__ = [
     "RuntimeConfig",

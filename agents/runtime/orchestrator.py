@@ -7,8 +7,8 @@ and workflow management.
 
 from typing import Any, Optional, Protocol
 
-from sage.libs.agentic.agents.runtime.config import RuntimeConfig
-from sage.libs.agentic.agents.runtime.telemetry import TelemetryCollector
+from sage_agentic.agents.runtime.config import RuntimeConfig
+from sage_agentic.agents.runtime.telemetry import TelemetryCollector
 
 
 class ToolSelector(Protocol):

@@ -13,11 +13,11 @@ logger = logging.getLogger(__name__)
 
 def register_builtin_planners() -> None:
     """Register all built-in planner implementations."""
-    from sage.libs.agentic.registry import planner_registry
+    from sage_agentic.registry import planner_registry
 
     # Import planner classes
     try:
-        from sage.libs.agentic.agents.planning.react_planner import ReActPlanner
+        from sage_agentic.agents.planning.react_planner import ReActPlanner
 
         planner_registry.register(
             "react",
@@ -28,7 +28,7 @@ def register_builtin_planners() -> None:
         logger.debug(f"Could not register ReActPlanner: {e}")
 
     try:
-        from sage.libs.agentic.agents.planning.tot_planner import TreeOfThoughtsPlanner
+        from sage_agentic.agents.planning.tot_planner import TreeOfThoughtsPlanner
 
         planner_registry.register(
             "tot",
@@ -43,7 +43,7 @@ def register_builtin_planners() -> None:
         logger.debug(f"Could not register TreeOfThoughtsPlanner: {e}")
 
     try:
-        from sage.libs.agentic.agents.planning.hierarchical_planner import (
+        from sage_agentic.agents.planning.hierarchical_planner import (
             HierarchicalPlanner,
         )
 
@@ -56,7 +56,7 @@ def register_builtin_planners() -> None:
         logger.debug(f"Could not register HierarchicalPlanner: {e}")
 
     try:
-        from sage.libs.agentic.agents.planning.simple_llm_planner import SimpleLLMPlanner
+        from sage_agentic.agents.planning.simple_llm_planner import SimpleLLMPlanner
 
         planner_registry.register(
             "simple",

@@ -288,7 +288,7 @@ Return JSON array of steps with id, action, tool_id, inputs, depends_on, expecte
 
             # Create query for tool selection
             try:
-                from sage.libs.agentic.agents.action.tool_selection.schemas import (
+                from sage_agentic.agents.action.tool_selection.schemas import (
                     ToolSelectionQuery,
                 )
 

@@ -8,7 +8,7 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
-from sage.libs.agentic.agents.runtime.config import TelemetryConfig
+from sage_agentic.agents.runtime.config import TelemetryConfig
 
 
 @dataclass

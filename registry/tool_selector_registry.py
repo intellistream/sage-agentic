@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Callable
 
-from sage.libs.agentic.interfaces.tool_selector import ToolSelector
+from sage_agentic.interfaces.tool_selector import ToolSelector
 
 _TOOL_SELECTOR_REGISTRY: dict[str, Callable[..., ToolSelector]] = {}
 

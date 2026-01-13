@@ -11,8 +11,8 @@ def example_1_rule_based_generation():
     print("示例 1: 基于规则的工作流生成")
     print("=" * 80)
 
-    from sage.libs.agentic.workflow import GenerationContext
-    from sage.libs.agentic.workflow.generators import RuleBasedWorkflowGenerator
+    from sage_agentic.workflow import GenerationContext
+    from sage_agentic.workflow.generators import RuleBasedWorkflowGenerator
 
     # 创建生成器
     generator = RuleBasedWorkflowGenerator()
@@ -47,8 +47,8 @@ def example_2_llm_generation():
     print("示例 2: 基于 LLM 的工作流生成")
     print("=" * 80)
 
-    from sage.libs.agentic.workflow import GenerationContext
-    from sage.libs.agentic.workflow.generators import LLMWorkflowGenerator
+    from sage_agentic.workflow import GenerationContext
+    from sage_agentic.workflow.generators import LLMWorkflowGenerator
 
     # 创建生成器
     generator = LLMWorkflowGenerator(model="qwen-max", use_rag=True)
@@ -100,8 +100,8 @@ def example_3_comparison():
     print("示例 3: 比较规则生成 vs LLM 生成")
     print("=" * 80)
 
-    from sage.libs.agentic.workflow import GenerationContext
-    from sage.libs.agentic.workflow.generators import (
+    from sage_agentic.workflow import GenerationContext
+    from sage_agentic.workflow.generators import (
         LLMWorkflowGenerator,
         RuleBasedWorkflowGenerator,
     )
@@ -147,8 +147,8 @@ def example_4_with_optimization():
     print("示例 4: 工作流生成 + 优化（未来集成）")
     print("=" * 80)
 
-    from sage.libs.agentic.workflow import GenerationContext
-    from sage.libs.agentic.workflow.generators import LLMWorkflowGenerator
+    from sage_agentic.workflow import GenerationContext
+    from sage_agentic.workflow.generators import LLMWorkflowGenerator
 
     # Step 1: 生成初始工作流
     generator = LLMWorkflowGenerator()

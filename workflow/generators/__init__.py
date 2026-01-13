@@ -24,7 +24,7 @@ Research Focus:
     - Resource requirements
 
 Usage Example:
-    >>> from sage.libs.agentic.workflow.generators import LLMWorkflowGenerator
+    >>> from sage_agentic.workflow.generators import LLMWorkflowGenerator
     >>>
     >>> # Create generator
     >>> generator = LLMWorkflowGenerator(model="gpt-4")

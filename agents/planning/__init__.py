@@ -10,7 +10,7 @@ Components:
 - Utilities: Plan repair, validation, and improvement suggestions
 
 Usage:
-    >>> from sage.libs.agentic.agents.planning import (
+    >>> from sage_agentic.agents.planning import (
     ...     HierarchicalPlanner,
     ...     RuleBasedTimingDecider,
     ...     PlanRequest,
