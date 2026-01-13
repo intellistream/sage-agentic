@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "isage-agentic"
-version = "0.0.0.3"
+version = "0.1.0.0"
 description = "SAGE Agentic Framework - Agent framework, planning, tool selection, and workflow"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -50,34 +50,11 @@ Homepage = "https://github.com/intellistream/sage-agentic"
 Repository = "https://github.com/intellistream/sage-agentic"
 
 [tool.setuptools]
-# Root directory is the sage_agentic package
-package-dir = {"sage_agentic" = "."}
+package-dir = {"" = "src"}
 
-# Explicitly list all packages (flat layout)
-packages = [
-    "sage_agentic",
-    "sage_agentic.agents",
-    "sage_agentic.agents.action",
-    "sage_agentic.agents.action.tool_selection",
-    "sage_agentic.agents.action.tool_selection.retriever",
-    "sage_agentic.agents.bots",
-    "sage_agentic.agents.planning",
-    "sage_agentic.agents.planning.utils",
-    "sage_agentic.agents.profile",
-    "sage_agentic.agents.runtime",
-    "sage_agentic.eval",
-    "sage_agentic.interface",
-    "sage_agentic.interface.protocols",
-    "sage_agentic.interface.registries",
-    "sage_agentic.interface.schemas",
-    "sage_agentic.interfaces",
-    "sage_agentic.reasoning",
-    "sage_agentic.registry",
-    "sage_agentic.workflow",
-    "sage_agentic.workflow.generators",
-    "sage_agentic.workflow.optimizers",
-    "sage_agentic.workflows",
-]
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["sage_libs*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.yaml", "*.json", "*.txt"]
