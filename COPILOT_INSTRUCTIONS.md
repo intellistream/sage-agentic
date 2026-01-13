@@ -5,7 +5,7 @@
 | 属性 | 值 |
 |-----|-----|
 | **PyPI 包名** | `isage-agentic` |
-| **导入名称** | `sage_agentic` |
+| **导入名称** | `sage_libs.sage_agentic` |
 | **SAGE 架构层级** | **L3 (Algorithm Library)** |
 | **版本格式** | 四段式 `0.0.0.x` |
 | **仓库** | `intellistream/sage-agentic` |
@@ -42,7 +42,7 @@ SAGE 主仓库中的 `sage.libs.agentic` 包含：
    - `AgentState`, `AgentAction`, `ToolResult`
    - 规划相关类型
 
-### 本包 (`sage_agentic`) 提供
+### 本包 (`sage_libs.sage_agentic`) 提供
 
 **具体实现**，通过 `_register.py` 自动注册到 SAGE 工厂：
 
@@ -56,10 +56,10 @@ SAGE 主仓库中的 `sage.libs.agentic` 包含：
 
 ```python
 # 方式 1：直接使用（独立模式）
-from sage_agentic import ReActAgent, PlanExecuteAgent
+from sage_libs.sage_agentic import ReActAgent, PlanExecuteAgent
 
 # 方式 2：通过 SAGE 工厂（集成模式）
-import sage_agentic  # 触发自动注册
+import sage_libs.sage_agentic  # 触发自动注册
 from sage.libs.agentic import create_agent
 agent = create_agent("react")
 ```
@@ -68,17 +68,17 @@ agent = create_agent("react")
 
 ```
 sage-agentic/
-├── src/sage_agentic/
-│   ├── __init__.py      # 主入口
-│   ├── _version.py      # 版本：__version__ = "0.0.0.x"
-│   ├── _register.py     # 自动注册到 SAGE 工厂
-│   ├── agents/          # Agent 实现
-│   │   ├── react.py
-│   │   ├── plan_execute.py
-│   │   └── reflex.py
-│   ├── planners/        # 规划器实现
-│   ├── tools/           # 内置工具
-│   └── reflection/      # 反思机制
+├── src/
+│   └── sage_libs/
+│       ├── __init__.py          # namespace package (pkgutil.extend_path)
+│       └── sage_agentic/
+│           ├── __init__.py      # 主入口，定义 __version__
+│           ├── agents/
+│           ├── workflow/
+│           ├── workflows/
+│           ├── reasoning/
+│           ├── interfaces/ 与 interface/
+│           └── registry/
 ├── tests/
 ├── pyproject.toml
 └── README.md
@@ -118,14 +118,14 @@ from sage.libs.agentic import xxx  # 只能导入接口层
 ### 问题 2：导入路径错误
 
 **检查**：
-1. 确认 `pyproject.toml` 中 `packages` 配置正确
-2. 确认 `src/sage_agentic/__init__.py` 导出正确
+1. 确认 `pyproject.toml` 中使用 src layout (`package-dir = {"" = "src"}`) 且 find 包含 `sage_libs*`
+2. 确认 `src/sage_libs/sage_agentic/__init__.py` 导出正确
 
 ### 问题 3：与 SAGE middleware 的区别
 
 | 组件 | 位置 | 用途 |
 |-----|------|------|
-| `sage_agentic.ReActAgent` | 本包 | 纯算法实现 |
+| `sage_libs.sage_agentic.ReActAgent` | 本包 | 纯算法实现 |
 | `sage.middleware.operators.agentic.runtime` | SAGE middleware | Dataflow 算子，可访问 VDB/Memory |
 
 ## 测试
@@ -138,11 +138,10 @@ pytest tests/ -v
 pytest tests/ -v -k "not integration"
 ```
 
-## 发布
+## 发布（标准：isage-pypi-publisher）
 
-```bash
-# 版本递增：修改 src/sage_agentic/_version.py
-# 构建和发布
-python -m build
-twine upload dist/*
-```
+1. 清理旧构建：`rm -rf dist build *.egg-info src/isage_agentic.egg-info`
+2. 构建发行物：`python -m build`
+3. 发布到 TestPyPI 验证：`isage-pypi-publisher --repository testpypi dist/*`
+4. 发布到 PyPI：`isage-pypi-publisher dist/*`
+5. 版本递增：同步更新 `pyproject.toml` 与 `src/sage_libs/sage_agentic/__init__.py` 的版本号（breaking change 用次/主版本）
