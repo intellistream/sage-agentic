@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "isage-agentic"
-version = "0.1.0"
-description = "SAGE Agentic Framework - Tool selection, planning, workflows, and agent coordination"
+version = "0.1.0.0"
+description = "SAGE Agentic Framework - Agent framework, planning, tool selection, and workflow"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = "MIT"
 authors = [
     { name = "IntelliStream Team", email = "shuhao_zhang@hust.edu.cn" }
 ]
@@ -20,24 +20,12 @@ keywords = [
     "workflow",
     "LLM",
     "AI",
-    "reasoning",
-]
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 dependencies = [
     "pydantic>=2.0.0",
     "typing-extensions>=4.0.0",
+    "isage-libs>=0.2.0",
 ]
 
 [project.optional-dependencies]
@@ -53,21 +41,23 @@ llm = [
     "anthropic>=0.20.0",
 ]
 
-all = [
+full = [
     "isage-agentic[dev,llm]",
 ]
 
 [project.urls]
 Homepage = "https://github.com/intellistream/sage-agentic"
 Repository = "https://github.com/intellistream/sage-agentic"
-Documentation = "https://github.com/intellistream/sage-agentic#readme"
-"Bug Tracker" = "https://github.com/intellistream/sage-agentic/issues"
 
 [tool.setuptools]
-packages = ["sage_agentic"]
+package-dir = {"" = "src"}
 
-[tool.setuptools.package-dir]
-sage_agentic = "."
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["sage_libs*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.json", "*.txt"]
 
 [tool.ruff]
 line-length = 100
@@ -76,9 +66,3 @@ target-version = "py310"
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP"]
 ignore = ["E501"]
-
-[tool.mypy]
-python_version = "3.10"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = false
