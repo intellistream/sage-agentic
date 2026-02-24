@@ -6,6 +6,7 @@
 
 ## Critical rules
 - Keep this package runtime/service-neutral; no L4+ dependencies (`sage-middleware`, `sage-kernel`).
+- Do not create new local virtual environments (`venv`/`.venv`); use the existing configured Python environment.
 - Do not add networked middleware resources (VDB/memory backends) here.
 - No fallback logic; fail fast.
 - Keep registry-based integration with SAGE factory via `_register.py`.
