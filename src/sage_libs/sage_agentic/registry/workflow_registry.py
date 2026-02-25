@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 from sage_libs.sage_agentic.interfaces.workflow import WorkflowOptimizer
 

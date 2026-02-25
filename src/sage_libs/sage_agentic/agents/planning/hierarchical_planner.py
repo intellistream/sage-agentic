@@ -7,7 +7,7 @@ Generates 5-10 step plans using LLM, validates dependencies, and assigns tools.
 
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from jinja2 import Template
 
@@ -51,7 +51,7 @@ class HierarchicalPlanner(BasePlanner):
         self,
         config: PlannerConfig,
         llm_client: Any = None,
-        tool_selector: Optional[Any] = None,
+        tool_selector: Any | None = None,
         **kwargs: Any,
     ):
         """
@@ -81,7 +81,7 @@ class HierarchicalPlanner(BasePlanner):
         cls,
         config: PlannerConfig,
         llm_client: Any = None,
-        tool_selector: Optional[Any] = None,
+        tool_selector: Any | None = None,
         **kwargs: Any,
     ) -> "HierarchicalPlanner":
         """

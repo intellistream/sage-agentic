@@ -6,7 +6,8 @@ SearcherBot - 搜索Bot
 
 import asyncio
 import logging
-from typing import Any, AsyncGenerator, Optional
+from collections.abc import AsyncGenerator
+from typing import Any
 
 from sage.libs.foundation.tools.tool import BaseTool
 
@@ -22,7 +23,7 @@ class SearcherBot:
     """
 
     def __init__(
-        self, tools: list[BaseTool], config: Optional[dict[str, Any]] = None, ctx: Any | None = None
+        self, tools: list[BaseTool], config: dict[str, Any] | None = None, ctx: Any | None = None
     ):
         """
         初始化SearcherBot

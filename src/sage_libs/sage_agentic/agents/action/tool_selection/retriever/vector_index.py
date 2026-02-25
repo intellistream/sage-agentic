@@ -5,7 +5,7 @@ Provides lightweight vector storage and similarity search using numpy.
 """
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
 import numpy as np
 
@@ -20,7 +20,7 @@ class VectorIndex:
     Suitable for up to ~10K vectors with acceptable performance.
     """
 
-    def __init__(self, dimension: Optional[int] = None, metric: str = "cosine"):
+    def __init__(self, dimension: int | None = None, metric: str = "cosine"):
         """
         Initialize vector index.
 
@@ -31,13 +31,13 @@ class VectorIndex:
         self.dimension = dimension
         self.metric = metric
 
-        self._vectors: Optional[np.ndarray] = None
+        self._vectors: np.ndarray | None = None
         self._ids: list[str] = []
         self._id_to_idx: dict[str, int] = {}
         self._metadata: dict[str, Any] = {}
 
     def add(
-        self, vector_id: str, vector: np.ndarray, metadata: Optional[dict[str, Any]] = None
+        self, vector_id: str, vector: np.ndarray, metadata: dict[str, Any] | None = None
     ) -> None:
         """
         Add vector to index.
@@ -82,7 +82,7 @@ class VectorIndex:
         self,
         vector_ids: list[str],
         vectors: np.ndarray,
-        metadata: Optional[list[dict[str, Any]]] = None,
+        metadata: list[dict[str, Any]] | None = None,
     ) -> None:
         """
         Add multiple vectors in batch.
@@ -106,7 +106,7 @@ class VectorIndex:
             self.add(vector_id, vectors[i], meta)
 
     def search(
-        self, query_vector: np.ndarray, top_k: int = 5, filter_ids: Optional[list[str]] = None
+        self, query_vector: np.ndarray, top_k: int = 5, filter_ids: list[str] | None = None
     ) -> list[tuple[str, float]]:
         """
         Search for similar vectors.
@@ -157,14 +157,14 @@ class VectorIndex:
         results = [(self._ids[idx], float(scores[idx])) for idx in top_indices]
         return results
 
-    def get_vector(self, vector_id: str) -> Optional[np.ndarray]:
+    def get_vector(self, vector_id: str) -> np.ndarray | None:
         """Get vector by ID."""
         idx = self._id_to_idx.get(vector_id)
         if idx is None:
             return None
         return self._vectors[idx].copy()
 
-    def get_metadata(self, vector_id: str) -> Optional[dict[str, Any]]:
+    def get_metadata(self, vector_id: str) -> dict[str, Any] | None:
         """Get metadata by ID."""
         return self._metadata.get(vector_id)
 

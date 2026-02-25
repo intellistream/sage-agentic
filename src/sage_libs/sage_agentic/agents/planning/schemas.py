@@ -4,7 +4,7 @@ Schemas and Data Structures for Planning Module
 Defines core data structures for hierarchical planning and timing judgment.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -28,11 +28,11 @@ class PlanStep(BaseModel):
 
     id: int
     action: str
-    tool_id: Optional[str] = None
+    tool_id: str | None = None
     inputs: dict[str, Any] = Field(default_factory=dict)
     depends_on: list[int] = Field(default_factory=list)
     expected_outputs: list[str] = Field(default_factory=list)
-    description: Optional[str] = None
+    description: str | None = None
 
     class Config:
         extra = "allow"
@@ -57,7 +57,7 @@ class PlanResult(BaseModel):
 
     steps: list[PlanStep]
     success: bool = True
-    error_message: Optional[str] = None
+    error_message: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
     @property
@@ -79,7 +79,7 @@ class TimingMessage(BaseModel):
 
     user_message: str
     conversation_history: list[dict[str, str]] = Field(default_factory=list)
-    last_tool_call: Optional[dict[str, Any]] = None
+    last_tool_call: dict[str, Any] | None = None
     context: dict[str, Any] = Field(default_factory=dict)
 
     class Config:
@@ -91,8 +91,8 @@ class TimingDecision(BaseModel):
 
     should_call_tool: bool
     confidence: float = Field(ge=0.0, le=1.0)
-    reasoning: Optional[str] = None
-    suggested_tool: Optional[str] = None
+    reasoning: str | None = None
+    suggested_tool: str | None = None
 
     class Config:
         extra = "allow"

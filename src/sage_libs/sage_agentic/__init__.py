@@ -22,16 +22,17 @@ __author__ = "IntelliStream Team"
 __email__ = "shuhao_zhang@hust.edu.cn"
 
 # Core submodules
+# Interface and registry
 from . import (
     agents,
+    interface,
+    interfaces,
     reasoning,
+    registry,
     workflow,
     workflows,
 )
 from . import eval as evaluation
-
-# Interface and registry
-from . import interface, interfaces, registry
 
 __all__ = [
     # Metadata

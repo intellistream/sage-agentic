@@ -6,7 +6,7 @@ Provides performance monitoring and metrics collection for agent runtime.
 
 import time
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 from sage_libs.sage_agentic.agents.runtime.config import TelemetryConfig
 
@@ -17,13 +17,13 @@ class Telemetry:
 
     operation: str
     start_time: float
-    end_time: Optional[float] = None
-    duration: Optional[float] = None
+    end_time: float | None = None
+    duration: float | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
     success: bool = True
-    error: Optional[str] = None
+    error: str | None = None
 
-    def finish(self, success: bool = True, error: Optional[str] = None) -> None:
+    def finish(self, success: bool = True, error: str | None = None) -> None:
         """Mark operation as finished."""
         self.end_time = time.time()
         self.duration = self.end_time - self.start_time
@@ -56,7 +56,7 @@ class TelemetryCollector:
         self.records: list[Telemetry] = []
         self._enabled = config.enabled
 
-    def start(self, operation: str, metadata: Optional[dict[str, Any]] = None) -> Telemetry:
+    def start(self, operation: str, metadata: dict[str, Any] | None = None) -> Telemetry:
         """Start tracking an operation.
 
         Args:
@@ -73,7 +73,7 @@ class TelemetryCollector:
         self.records.append(record)
         return record
 
-    def finish(self, record: Telemetry, success: bool = True, error: Optional[str] = None) -> None:
+    def finish(self, record: Telemetry, success: bool = True, error: str | None = None) -> None:
         """Finish tracking an operation.
 
         Args:

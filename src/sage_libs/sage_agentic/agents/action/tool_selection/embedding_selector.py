@@ -5,7 +5,6 @@ Uses embedding models and vector similarity search for tool selection.
 """
 
 import logging
-from typing import Optional
 
 import numpy as np
 
@@ -55,9 +54,9 @@ class EmbeddingSelector(BaseToolSelector):
         self.embedding_client = resources.embedding_client
 
         # Initialize vector index
-        self._index: Optional[VectorIndex] = None
+        self._index: VectorIndex | None = None
         self._tool_texts: dict[str, str] = {}
-        self._embedding_dimension: Optional[int] = None
+        self._embedding_dimension: int | None = None
 
         # Preprocess tools
         self._preprocess_tools()
@@ -259,7 +258,7 @@ class EmbeddingSelector(BaseToolSelector):
             self.logger.error(f"Error in embedding selection for {query.sample_id}: {e}")
             raise
 
-    def get_embedding_dimension(self) -> Optional[int]:
+    def get_embedding_dimension(self) -> int | None:
         """Get embedding dimension."""
         return self._embedding_dimension
 

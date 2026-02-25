@@ -119,7 +119,7 @@ class DFSDTSelector(BaseToolSelector):
         self._llm_initialized = False
 
         # Keyword selector for pre-filtering
-        self._keyword_selector: Optional[KeywordSelector] = None
+        self._keyword_selector: KeywordSelector | None = None
         if config.use_keyword_prefilter:
             keyword_config = KeywordSelectorConfig(
                 name="keyword_prefilter",

@@ -18,8 +18,8 @@ def register_builtin_workflow_optimizers() -> None:
     # Import optimizer classes (all in optimizers/__init__.py)
     try:
         from sage_libs.sage_agentic.workflow.optimizers import (
-            NoOpOptimizer,
             GreedyOptimizer,
+            NoOpOptimizer,
             ParallelizationOptimizer,
         )
 

@@ -7,7 +7,7 @@ Handles JSON parsing, repair, and error recovery for plan generation.
 import json
 import logging
 import re
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +41,7 @@ def strip_code_fences(text: str) -> str:
     return text.strip()
 
 
-def extract_json_array(text: str) -> Optional[list[Any]]:
+def extract_json_array(text: str) -> list[Any] | None:
     """
     Extract JSON array from text using multiple strategies.
 
@@ -102,7 +102,7 @@ def extract_json_array(text: str) -> Optional[list[Any]]:
     return None
 
 
-def repair_json(text: str) -> Optional[str]:
+def repair_json(text: str) -> str | None:
     """
     Attempt to repair malformed JSON.
 
@@ -224,7 +224,7 @@ def normalize_plan_steps(data: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return normalized
 
 
-def extract_and_repair_plan(text: str) -> Optional[list[dict[str, Any]]]:
+def extract_and_repair_plan(text: str) -> list[dict[str, Any]] | None:
     """
     Main function to extract and repair plan from LLM output.
 

@@ -5,7 +5,6 @@ Handles dependency parsing, cycle detection, and topological sorting of plan ste
 """
 
 import logging
-from typing import Optional
 
 from .schemas import PlanStep
 
@@ -62,7 +61,7 @@ class DependencyGraph:
         """
         return cls(steps)
 
-    def detect_cycles(self) -> Optional[list[int]]:
+    def detect_cycles(self) -> list[int] | None:
         """
         Detect cycles in the dependency graph using DFS.
 
@@ -73,7 +72,7 @@ class DependencyGraph:
         rec_stack: set[int] = set()
         parent: dict[int, int] = {}
 
-        def dfs(node: int) -> Optional[list[int]]:
+        def dfs(node: int) -> list[int] | None:
             visited.add(node)
             rec_stack.add(node)
 
@@ -87,7 +86,7 @@ class DependencyGraph:
                 elif neighbor in rec_stack:
                     # Found cycle, reconstruct it
                     cycle = [neighbor]
-                    current: Optional[int] = node
+                    current: int | None = node
                     while current != neighbor and current is not None:
                         cycle.append(current)
                         current = parent.get(current)

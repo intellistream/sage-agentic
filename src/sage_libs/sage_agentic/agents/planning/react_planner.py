@@ -19,7 +19,7 @@ Pattern:
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from jinja2 import Template
 from pydantic import Field
@@ -176,7 +176,7 @@ Generate the next step:"""
         self,
         config: PlannerConfig,
         llm_client: Any = None,
-        tool_selector: Optional[Any] = None,
+        tool_selector: Any | None = None,
         **kwargs: Any,
     ):
         """
@@ -212,7 +212,7 @@ Generate the next step:"""
         cls,
         config: PlannerConfig,
         llm_client: Any = None,
-        tool_selector: Optional[Any] = None,
+        tool_selector: Any | None = None,
         **kwargs: Any,
     ) -> "ReActPlanner":
         """Create planner from configuration."""
@@ -291,7 +291,7 @@ Generate the next step:"""
         response: str,
         step_id: int,
         available_tools: list[str],
-    ) -> Optional[ReActStep]:
+    ) -> ReActStep | None:
         """Parse LLM response into ReActStep."""
         import json
         import re

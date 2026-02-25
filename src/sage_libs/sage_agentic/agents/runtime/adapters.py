@@ -5,7 +5,7 @@ Provides interface between agent runtime and benchmark evaluation systems.
 Allows benchmark runners to interact with runtime components in a standardized way.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from sage_libs.sage_agentic.agents.runtime.orchestrator import Orchestrator
 
@@ -26,7 +26,7 @@ class BenchmarkAdapter:
         """
         self.orchestrator = orchestrator
 
-    def run_tool_selection(self, query: Any, top_k: Optional[int] = None) -> list[Any]:
+    def run_tool_selection(self, query: Any, top_k: int | None = None) -> list[Any]:
         """Execute tool selection for benchmark evaluation.
 
         Args:
