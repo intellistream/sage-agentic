@@ -17,16 +17,14 @@ import os
 import time
 from typing import Any
 
-logger = logging.getLogger(__name__)
-
-logger = logging.getLogger(__name__)
-
 from .base import (
     BaseWorkflowGenerator,
     GenerationContext,
     GenerationResult,
     GenerationStrategy,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class LLMWorkflowGenerator(BaseWorkflowGenerator):

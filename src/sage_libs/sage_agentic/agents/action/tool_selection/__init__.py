@@ -28,9 +28,6 @@ from .schemas import (
     TwoStageSelectorConfig,
     create_selector_config,
 )
-from .schemas import (
-    GorillaSelectorConfig as GorillaSelectorConfigSchema,
-)
 
 # Auto-register built-in selectors
 register_selector("keyword", KeywordSelector)
