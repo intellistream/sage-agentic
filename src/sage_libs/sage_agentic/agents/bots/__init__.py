@@ -14,6 +14,7 @@ Available Bots:
 """
 
 from .answer_bot import *  # noqa: F403
+from .coder_bot import CoderBot
 from .critic_bot import *  # noqa: F403
 from .question_bot import *  # noqa: F403
 from .searcher_bot import *  # noqa: F403
