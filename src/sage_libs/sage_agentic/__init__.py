@@ -34,6 +34,7 @@ from . import (
     interfaces,
     reasoning,
     registry,
+    vida,
     workflow,
     workflows,
 )
@@ -54,4 +55,6 @@ __all__ = [
     "interfaces",
     "registry",
     "interface",
+    # Async / VidaAgent core
+    "vida",
 ]
