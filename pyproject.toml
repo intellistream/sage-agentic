@@ -38,15 +38,6 @@ dev = [
     "mypy>=1.0.0",
 ]
 
-llm = [
-    "openai>=1.0.0",
-    "anthropic>=0.20.0",
-]
-
-full = [
-    "isage-agentic[dev,llm]",
-]
-
 [project.urls]
 Homepage = "https://github.com/intellistream/sage-agentic"
 Repository = "https://github.com/intellistream/sage-agentic"
