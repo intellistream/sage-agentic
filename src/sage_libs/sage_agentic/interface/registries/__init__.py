@@ -8,7 +8,7 @@ from typing import Any
 
 from ..protocols import BasePlanner, BaseToolSelector
 
-# Type aliases for factory functions
+# Factory type definitions
 PlannerFactory = Callable[..., BasePlanner]
 SelectorFactory = Callable[..., BaseToolSelector]
 

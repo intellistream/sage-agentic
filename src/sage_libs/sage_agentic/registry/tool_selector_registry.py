@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from sage_libs.sage_agentic.interfaces.tool_selector import ToolSelector
+from sage_libs.sage_agentic.interface.protocols import ToolSelectorProtocol
 
-_TOOL_SELECTOR_REGISTRY: dict[str, Callable[..., ToolSelector]] = {}
+_TOOL_SELECTOR_REGISTRY: dict[str, Callable[..., ToolSelectorProtocol]] = {}
 
 
-def register(name: str, factory: Callable[..., ToolSelector]) -> None:
+def register(name: str, factory: Callable[..., ToolSelectorProtocol]) -> None:
     """Register a tool selector implementation.
 
     Args:
@@ -19,7 +19,7 @@ def register(name: str, factory: Callable[..., ToolSelector]) -> None:
     _TOOL_SELECTOR_REGISTRY[name] = factory
 
 
-def create(name: str, **kwargs) -> ToolSelector:
+def create(name: str, **kwargs) -> ToolSelectorProtocol:
     """Create a tool selector instance.
 
     Args:

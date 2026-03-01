@@ -272,7 +272,7 @@ class RuleBasedWorkflowGenerator(BaseWorkflowGenerator):
                     {
                         "id": "retriever",
                         "kind": "map",
-                        "class": "sage.middleware.operators.rag.retriever.ChromaRetriever",
+                        "class": "sage.libs.rag.retrievers.ChromaRetriever",
                         "params": {
                             "persist_directory": str(Path.home() / ".sage" / "vector_db"),
                             "collection_name": "sage_docs",
@@ -283,7 +283,7 @@ class RuleBasedWorkflowGenerator(BaseWorkflowGenerator):
                     {
                         "id": "promptor",
                         "kind": "map",
-                        "class": "sage.middleware.operators.rag.promptor.QAPromptor",
+                        "class": "sage.libs.rag.promptors.QAPromptor",
                         "params": {},
                         "summary": "构建QA提示词",
                     },
@@ -296,7 +296,7 @@ class RuleBasedWorkflowGenerator(BaseWorkflowGenerator):
                 {
                     "id": "generator",
                     "kind": "map",
-                    "class": "sage.middleware.operators.rag.generator.OpenAIGenerator",
+                    "class": "sage.libs.rag.generators.OpenAIGenerator",
                     "params": {
                         "model_name": "gpt-3.5-turbo",
                         "temperature": 0.7,

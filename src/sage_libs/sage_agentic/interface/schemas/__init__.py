@@ -1,6 +1,6 @@
 """Data structures and schemas for agentic components.
 
-Re-exports schemas from existing modules for cleaner imports.
+Aggregates schema definitions from canonical modules for a single import surface.
 """
 
 # Use absolute imports

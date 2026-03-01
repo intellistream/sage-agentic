@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from sage_libs.sage_agentic.interfaces.workflow import WorkflowOptimizer
+from sage_libs.sage_agentic.workflow.base import BaseOptimizer
 
-_WORKFLOW_REGISTRY: dict[str, Callable[..., WorkflowOptimizer]] = {}
+_WORKFLOW_REGISTRY: dict[str, Callable[..., BaseOptimizer]] = {}
 
 
-def register(name: str, factory: Callable[..., WorkflowOptimizer]) -> None:
+def register(name: str, factory: Callable[..., BaseOptimizer]) -> None:
     """Register a workflow optimizer implementation.
 
     Args:
@@ -19,7 +19,7 @@ def register(name: str, factory: Callable[..., WorkflowOptimizer]) -> None:
     _WORKFLOW_REGISTRY[name] = factory
 
 
-def create(name: str, **kwargs) -> WorkflowOptimizer:
+def create(name: str, **kwargs) -> BaseOptimizer:
     """Create a workflow optimizer instance.
 
     Args:

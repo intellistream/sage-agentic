@@ -5,9 +5,6 @@ Layer: L3 (Core - Research & Algorithm Library)
 
 An advanced workflow generator that uses Large Language Models
 to understand user intent and generate appropriate workflows.
-
-This generator integrates with the existing Pipeline Builder
-from sage-cli, providing a research-friendly interface.
 """
 
 from __future__ import annotations
@@ -15,6 +12,7 @@ from __future__ import annotations
 import logging
 import os
 import time
+from collections.abc import Callable
 from typing import Any
 
 from .base import (
@@ -25,6 +23,9 @@ from .base import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+WorkflowPlanGenerator = Callable[[dict[str, Any], dict[str, Any]], dict[str, Any]]
 
 
 class LLMWorkflowGenerator(BaseWorkflowGenerator):
@@ -56,6 +57,7 @@ class LLMWorkflowGenerator(BaseWorkflowGenerator):
         api_key: str | None = None,
         base_url: str | None = None,
         use_rag: bool = True,
+        plan_generator: WorkflowPlanGenerator | None = None,
     ):
         """初始化 LLM 驱动的生成器
 
@@ -64,6 +66,7 @@ class LLMWorkflowGenerator(BaseWorkflowGenerator):
             api_key: API 密钥，默认从环境变量读取
             base_url: API base URL，默认从环境变量读取
             use_rag: 是否使用 RAG 增强生成（检索 SAGE 文档）
+            plan_generator: 注入的计划生成函数（由应用层提供）
         """
         super().__init__(GenerationStrategy.LLM_DRIVEN)
 
@@ -105,8 +108,7 @@ class LLMWorkflowGenerator(BaseWorkflowGenerator):
 
             for port in [
                 SagePorts.get_recommended_llm_port(),
-                SagePorts.LLM_DEFAULT,
-                SagePorts.BENCHMARK_LLM,
+                SagePorts.SAGELLM_SERVE_PORT,
             ]:
                 candidate = f"http://localhost:{port}/v1"
                 if self._probe_endpoint(candidate):
@@ -114,16 +116,7 @@ class LLMWorkflowGenerator(BaseWorkflowGenerator):
                     break
 
         self.use_rag = use_rag
-
-        # 检查依赖
-        self._pipeline_builder_available = False
-        try:
-            from sage.cli.commands.apps import pipeline as pipeline_builder  # noqa: F401
-
-            self._pipeline_builder_available = True
-            logger.info("Pipeline Builder available for LLM generation")
-        except ImportError:
-            logger.warning("Pipeline Builder not available (sage-cli not installed)")
+        self._plan_generator = plan_generator
 
     def _probe_endpoint(self, url: str, timeout: float = 2.0) -> bool:
         """探测端点是否可用
@@ -147,11 +140,11 @@ class LLMWorkflowGenerator(BaseWorkflowGenerator):
         """使用 LLM 生成工作流"""
         start_time = time.time()
 
-        if not self._pipeline_builder_available:
+        if self._plan_generator is None:
             return GenerationResult(
                 success=False,
                 strategy_used=self.strategy,
-                error="Pipeline Builder 不可用，请安装 sage-cli",
+                error="未注入 plan_generator。请在应用层提供工作流规划器实现。",
                 generation_time=time.time() - start_time,
             )
 
@@ -164,17 +157,14 @@ class LLMWorkflowGenerator(BaseWorkflowGenerator):
             )
 
         try:
-            # Step 1: 构建 Pipeline Builder 配置
-            config = self._build_pipeline_builder_config()
+            # Step 1: 构建生成配置
+            config = self._build_generation_config()
 
             # Step 2: 构建需求描述
             requirements = self._build_requirements(context)
 
-            # Step 3: 调用 Pipeline Builder 生成
-            from sage.cli.commands.apps import pipeline as pipeline_builder
-
-            generator = pipeline_builder.PipelinePlanGenerator(config)
-            raw_plan = generator.generate(requirements, previous_plan=None, feedback=None)
+            # Step 3: 调用应用层注入的规划器
+            raw_plan = self._plan_generator(requirements, config)
 
             # Step 4: 转换为可视化格式
             visual_pipeline = self._convert_to_visual_format(raw_plan)
@@ -218,20 +208,15 @@ class LLMWorkflowGenerator(BaseWorkflowGenerator):
                 generation_time=generation_time,
             )
 
-    def _build_pipeline_builder_config(self):
-        """构建 Pipeline Builder 配置"""
-        from sage.cli.commands.apps import pipeline as pipeline_builder
-
-        return pipeline_builder.BuilderConfig(
-            backend="openai",
-            model=self.model,
-            base_url=self.base_url,
-            api_key=self.api_key,
-            domain_contexts=(),
-            knowledge_base=None,
-            knowledge_top_k=0 if not self.use_rag else 5,
-            show_knowledge=False,
-        )
+    def _build_generation_config(self) -> dict[str, Any]:
+        """构建 LLM 工作流生成配置。"""
+        return {
+            "backend": "openai",
+            "model": self.model,
+            "base_url": self.base_url,
+            "api_key": self.api_key,
+            "knowledge_top_k": 0 if not self.use_rag else 5,
+        }
 
     def _build_requirements(self, context: GenerationContext) -> dict[str, Any]:
         """构建需求描述"""

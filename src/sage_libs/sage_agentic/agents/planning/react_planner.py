@@ -114,7 +114,7 @@ class ReActPlanner(BasePlanner):
     - Explicit reasoning traces for interpretability
     - Iterative refinement based on predicted observations
     - Graceful fallback when LLM unavailable
-    - Compatible with benchmark framework
+    - Integrates with benchmark framework
 
     Usage:
         >>> config = ReActConfig(max_iterations=10)
@@ -185,7 +185,7 @@ Generate the next step:"""
         Args:
             config: Planner configuration (ReActConfig recommended)
             llm_client: LLM client for plan generation
-            tool_selector: Optional tool selector for fallback
+            tool_selector: Optional tool selector for auxiliary selection
             **kwargs: Additional arguments
         """
         super().__init__(config)
@@ -533,6 +533,3 @@ Generate the next step:"""
             success=len(steps) > 0,
         )
 
-
-# Alias for compatibility
-ReActPlannerConfig = ReActConfig

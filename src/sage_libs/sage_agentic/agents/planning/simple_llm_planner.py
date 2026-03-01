@@ -214,7 +214,7 @@ class SimpleLLMPlanner:
         user_query: str,
         tools: dict[str, dict[str, Any]],
     ) -> list[PlanStep]:
-        # 兼容旧接口，直接收集流式结果
+        # 非流式入口：收集流式结果并返回最终计划
         final_plan = []
         for event in self.plan_stream(profile_system_prompt, user_query, tools):
             if event["type"] == "plan":

@@ -13,15 +13,18 @@ Available Bots:
 - CriticBot: Evaluates and critiques outputs
 """
 
-from .answer_bot import *  # noqa: F403
+from .answer_bot import AnswerBot
 from .coder_bot import CoderBot
-from .critic_bot import *  # noqa: F403
-from .question_bot import *  # noqa: F403
-from .searcher_bot import *  # noqa: F403
+from .critic_bot import CriticBot
+from .question_bot import QuestionBot
+from .searcher_bot import SearcherBot
 
-__all__: list[str] = [
-    # Re-export from submodules
-    # Will be populated as modules are standardized
+__all__ = [
+    "AnswerBot",
+    "CoderBot",
+    "CriticBot",
+    "QuestionBot",
+    "SearcherBot",
 ]
 
 __version__ = "0.1.0"

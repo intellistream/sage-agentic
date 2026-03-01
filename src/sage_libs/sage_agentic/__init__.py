@@ -8,7 +8,7 @@ Core modules:
 - workflow: Workflow generation and optimization
 - workflows: Concrete workflow presets
 - reasoning: Search algorithms (beam, DFS, BFS, scoring)
-- interfaces: Protocol definitions
+- interface: Protocol/registry/schema definitions
 - registry: Factory and registration system
 
 Usage:
@@ -31,7 +31,6 @@ __email__ = "shuhao_zhang@hust.edu.cn"
 from . import (
     agents,
     interface,
-    interfaces,
     reasoning,
     registry,
     vida,
@@ -52,7 +51,6 @@ __all__ = [
     "reasoning",
     "evaluation",
     # Interface layer
-    "interfaces",
     "registry",
     "interface",
     # Async / VidaAgent core

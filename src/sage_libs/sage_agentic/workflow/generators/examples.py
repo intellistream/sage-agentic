@@ -5,6 +5,25 @@ Workflow Generation Examples
 """
 
 
+def _demo_plan_generator(requirements: dict, config: dict) -> dict:
+    """应用层注入的演示计划生成器。"""
+    _ = requirements, config
+    return {
+        "pipeline": {"name": "demo", "description": "demo generated plan"},
+        "source": {
+            "class": "sage.libs.foundation.io.source.FileSource",
+            "params": {"file_path": "data/sample.txt"},
+            "summary": "文件数据源",
+        },
+        "stages": [],
+        "sink": {
+            "class": "sage.libs.foundation.io.sink.TerminalSink",
+            "params": {},
+            "summary": "终端输出",
+        },
+    }
+
+
 def example_1_rule_based_generation():
     """示例1: 使用规则生成器"""
     print("\n" + "=" * 80)
@@ -51,7 +70,9 @@ def example_2_llm_generation():
     from sage_libs.sage_agentic.workflow.generators import LLMWorkflowGenerator
 
     # 创建生成器
-    generator = LLMWorkflowGenerator(model="qwen-max", use_rag=True)
+    generator = LLMWorkflowGenerator(
+        model="qwen-max", use_rag=True, plan_generator=_demo_plan_generator
+    )
 
     # 定义生成上下文（更复杂的需求）
     context = GenerationContext(
@@ -88,8 +109,7 @@ def example_2_llm_generation():
         # 打印节点详情
         print("\n节点列表:")
         for node in result.visual_pipeline["nodes"]:
-            node_data = node["data"]
-            print(f"  {node['id']}: {node_data['label']} ({node_data['nodeId']})")
+            print(f"  {node['id']}: {node['label']} ({node['type']})")
     else:
         print(f"✗ 生成失败: {result.error}")
 
@@ -117,7 +137,7 @@ def example_3_comparison():
     rule_result = rule_generator.generate(context)
 
     # LLM 生成
-    llm_generator = LLMWorkflowGenerator()
+    llm_generator = LLMWorkflowGenerator(plan_generator=_demo_plan_generator)
     llm_result = llm_generator.generate(context)
 
     # 比较结果
@@ -151,7 +171,7 @@ def example_4_with_optimization():
     from sage_libs.sage_agentic.workflow.generators import LLMWorkflowGenerator
 
     # Step 1: 生成初始工作流
-    generator = LLMWorkflowGenerator()
+    generator = LLMWorkflowGenerator(plan_generator=_demo_plan_generator)
     context = GenerationContext(
         user_input="创建一个多步骤的数据处理管道",
         constraints={"max_cost": 100, "max_latency": 10.0, "min_quality": 0.8},
@@ -197,7 +217,7 @@ if __name__ == "__main__":
 
     except ImportError as e:
         print(f"\n✗ 导入错误: {e}")
-        print("请确保已安装 sage-libs 和 sage-cli")
+        print("请确保已安装 sage-libs")
         sys.exit(1)
     except Exception as e:
         print(f"\n✗ 运行错误: {e}")

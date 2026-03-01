@@ -4,7 +4,6 @@ SearcherBot - 搜索Bot
 负责执行信息检索任务，协调多个搜索工具（如 Arxiv, Google Search, Internal Knowledge 等）。
 """
 
-import asyncio
 import logging
 from collections.abc import AsyncGenerator
 from typing import Any
@@ -49,9 +48,12 @@ class SearcherBot:
         )
 
         for tool in self.tools:
+            tool_name = "Unknown Tool"
             try:
-                # 兼容 L3 (tool_name) 和 L6 (name) 工具接口
-                tool_name = getattr(tool, "tool_name", getattr(tool, "name", "Unknown Tool"))
+                tool_name = getattr(tool, "tool_name", "")
+                if not tool_name:
+                    tool_name = "Unknown Tool"
+                    raise ValueError("Tool missing required 'tool_name' attribute")
                 logger.debug(f"Invoking tool: {tool_name}")
 
                 # Yield start event
@@ -82,41 +84,17 @@ class SearcherBot:
                         }
                         continue
 
-                # 执行工具调用
-                result = None
-
-                # 1. 尝试 L6 异步接口 (run)
-                if hasattr(tool, "run") and callable(tool.run):
-                    # L6 工具通常接受 kwargs
-                    # 尝试传递 query 作为参数
-                    try:
-                        if asyncio.iscoroutinefunction(tool.run):
-                            result = await tool.run(query=query, **call_kwargs)
-                        else:
-                            # 同步 run (不常见，但以防万一)
-                            result = tool.run(query=query, **call_kwargs)
-                    except TypeError:
-                        # 尝试不带 query 参数 (如果工具不接受)
-                        if asyncio.iscoroutinefunction(tool.run):
-                            result = await tool.run(**call_kwargs)
-                        else:
-                            result = tool.run(**call_kwargs)
-
-                # 2. 尝试 L3 同步接口 (execute)
-                elif hasattr(tool, "execute") and callable(tool.execute):
-                    try:
-                        result = tool.execute(query=query, **call_kwargs)
-                    except TypeError:
-                        result = tool.execute(query, **call_kwargs)
-
-                else:
-                    logger.warning(f"Tool {tool_name} has no 'run' or 'execute' method")
+                # 执行工具调用（L3: execute）
+                if not hasattr(tool, "execute") or not callable(tool.execute):
+                    logger.warning(f"Tool {tool_name} has no 'execute' method")
                     yield {
                         "type": "tool_error",
                         "tool": tool_name,
-                        "error": "No execution method found",
+                        "error": "Tool missing required 'execute' method",
                     }
                     continue
+
+                result = tool.execute(query=query, **call_kwargs)
 
                 # 规范化结果
                 if result:
@@ -151,7 +129,7 @@ class SearcherBot:
 
     async def search(self, query: str, **kwargs) -> list[dict[str, Any]]:
         """
-        执行搜索 (Async) - 兼容旧接口
+        执行搜索 (Async)
 
         Args:
             query: 搜索查询词

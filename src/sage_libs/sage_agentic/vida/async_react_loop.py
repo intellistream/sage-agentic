@@ -2,8 +2,7 @@
 
 This module provides ``AsyncReActLoop``, a fully-asynchronous implementation
 of the ReAct (Reasoning + Acting) pattern.  It implements the L3 standard
-``sage.libs.agentic.interface.base.BaseAgent`` interface and extends the sync
-``sage_libs.sage_agentic.agents.agent.BaseAgent`` to keep backward-compat.
+``sage.libs.agentic.interface.base.BaseAgent`` interface.
 
 Key capabilities
 ----------------
@@ -44,9 +43,6 @@ from typing import Any, Protocol, runtime_checkable
 from sage.libs.agentic.interface.base import AgentAction, AgentResult
 from sage.libs.agentic.interface.base import BaseAgent as SageLibsBaseAgent
 
-# Reuse the sync tool abstraction from the existing BaseAgent sibling
-from sage_libs.sage_agentic.agents.agent import BaseAgent as SyncBaseAgent
-
 __all__ = ["AsyncReActLoop", "AsyncTool"]
 
 logger = logging.getLogger(__name__)
@@ -58,7 +54,7 @@ logger = logging.getLogger(__name__)
 
 @runtime_checkable
 class AsyncTool(Protocol):
-    """Minimal protocol for an async-compatible tool."""
+    """Minimal protocol for an async-capable tool."""
 
     name: str
     description: str
@@ -122,15 +118,14 @@ class AsyncReActLoop(SageLibsBaseAgent):
               (useful for rate-limited APIs; set to 0 in tests).
         model: LLM client with an async ``agenerate(messages)`` method **or**
             a sync ``generate(messages)`` method (wrapped automatically).
-        tools: Optional list of ``AsyncTool``-compatible objects to register.
+        tools: Optional list of ``AsyncTool`` objects to register.
             Tools can also be injected per-call via ``run_with_tools``.
         logger: Optional custom logger.
 
     Notes:
         - Implements ``sage.libs.agentic.interface.base.BaseAgent`` (L3 standard).
-        - The sync ``execute()`` shim delegates to ``asyncio.run(run_with_tools(...))``
-          to keep the ``SageLibsBaseAgent`` contract without breaking callers that
-          use the sync surface.
+                - ``plan()`` and ``execute()`` provide the synchronous contract required
+                    by ``SageLibsBaseAgent``.
     """
 
     def __init__(
@@ -163,7 +158,7 @@ class AsyncReActLoop(SageLibsBaseAgent):
     # ------------------------------------------------------------------
 
     def plan(self, task: str, context: dict[str, Any]) -> list[AgentAction]:
-        """Synchronous plan shim — runs the async loop to completion.
+        """Run planning synchronously by executing the async loop to completion.
 
         Returns a single ``AgentAction`` wrapping the final answer.
         Works correctly whether or not an event loop is already running
@@ -189,7 +184,7 @@ class AsyncReActLoop(SageLibsBaseAgent):
         return [AgentAction(tool_name="__final__", tool_input={}, thought=answer)]
 
     def execute(self, task: str, **kwargs: Any) -> AgentResult:
-        """Synchronous execute shim for backward-compat with L3 interface."""
+        """Execute task through the synchronous interface contract."""
         actions = self.plan(task, kwargs.get("context", {}))
         return AgentResult(
             output=actions[-1].thought if actions else "",

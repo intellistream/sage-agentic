@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from sage_libs.sage_agentic.interfaces.planner import Planner
+from sage_libs.sage_agentic.interface.protocols import PlannerProtocol
 
-_PLANNER_REGISTRY: dict[str, Callable[..., Planner]] = {}
+_PLANNER_REGISTRY: dict[str, Callable[..., PlannerProtocol]] = {}
 
 
-def register(name: str, factory: Callable[..., Planner]) -> None:
+def register(name: str, factory: Callable[..., PlannerProtocol]) -> None:
     """Register a planner implementation.
 
     Args:
@@ -19,7 +19,7 @@ def register(name: str, factory: Callable[..., Planner]) -> None:
     _PLANNER_REGISTRY[name] = factory
 
 
-def create(name: str, **kwargs) -> Planner:
+def create(name: str, **kwargs) -> PlannerProtocol:
     """Create a planner instance.
 
     Args:
