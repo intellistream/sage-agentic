@@ -36,7 +36,7 @@ import json
 import logging
 import re
 from collections.abc import AsyncIterator
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Protocol, runtime_checkable
 
 # L3 → L3: sage.libs.agentic standard interface (compliant)
