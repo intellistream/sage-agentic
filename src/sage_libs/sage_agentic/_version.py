@@ -2,6 +2,6 @@
 
 from __future__ import annotations
 
-__version__ = "0.1.0.4"
+__version__ = "0.1.0.5"
 __author__ = "IntelliStream Team"
 __email__ = "shuhao_zhang@hust.edu.cn"
