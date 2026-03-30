@@ -1,6 +1,6 @@
 """Data structures and schemas for agentic components.
 
-Re-exports schemas from existing modules for cleaner imports.
+Aggregates schema definitions from canonical modules for a single import surface.
 """
 
 # Use absolute imports
@@ -10,10 +10,10 @@ from sage_libs.sage_agentic.agents.action.tool_selection.schemas import (
     ToolSelectionQuery,
 )
 from sage_libs.sage_agentic.agents.planning.schemas import (
+    PlannerConfig,
     PlanRequest,
     PlanResult,
     PlanStep,
-    PlannerConfig,
     TimingConfig,
     TimingDecision,
     TimingMessage,

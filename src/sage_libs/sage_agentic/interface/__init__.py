@@ -5,7 +5,7 @@ Implementations are provided by the isage-agentic package.
 
 Core Components:
 - protocols: Abstract interfaces (Protocol/ABC) for planners, selectors, agents
-- registries: Plugin registries for dynamic component loading  
+- registries: Plugin registries for dynamic component loading
 - schemas: Data structures (Pydantic models) for requests/responses
 
 Usage:

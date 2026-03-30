@@ -26,8 +26,17 @@ Research Focus:
 Usage Example:
     >>> from sage_libs.sage_agentic.workflow.generators import LLMWorkflowGenerator
     >>>
+    >>> def app_plan_generator(requirements, config):
+    ...     # Provided by application layer
+    ...     return {
+    ...         "pipeline": {"name": "demo", "description": ""},
+    ...         "source": {"class": "sage.libs.foundation.io.source.FileSource", "params": {}, "summary": ""},
+    ...         "stages": [],
+    ...         "sink": {"class": "sage.libs.foundation.io.sink.TerminalSink", "params": {}, "summary": ""},
+    ...     }
+    >>>
     >>> # Create generator
-    >>> generator = LLMWorkflowGenerator(model="gpt-4")
+    >>> generator = LLMWorkflowGenerator(model="gpt-4", plan_generator=app_plan_generator)
     >>>
     >>> # Generate workflow from natural language
     >>> result = generator.generate(

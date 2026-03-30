@@ -6,7 +6,7 @@ Provides simple in-memory caching for selection results.
 
 import logging
 import time
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class ResultCache:
     Supports TTL and size limits.
     """
 
-    def __init__(self, max_size: int = 1000, ttl_seconds: Optional[float] = None):
+    def __init__(self, max_size: int = 1000, ttl_seconds: float | None = None):
         """
         Initialize cache.
 
@@ -33,7 +33,7 @@ class ResultCache:
         self._hits = 0
         self._misses = 0
 
-    def get(self, key: str) -> Optional[Any]:
+    def get(self, key: str) -> Any | None:
         """
         Get value from cache.
 

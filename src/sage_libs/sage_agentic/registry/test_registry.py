@@ -84,23 +84,19 @@ def test_interfaces():
     print("Testing Interface Imports")
     print("=" * 60)
 
-    from sage_libs.sage_agentic.interfaces import (
-        agent,
-        planner,
-        tool_selector,
-        workflow,
+    from sage_libs.sage_agentic.interface import (
+        AgentProtocol,
+        PlannerProtocol,
+        PlanRequest,
+        ToolSelectionQuery,
+        ToolSelectorProtocol,
     )
 
-    print(f"✅ agent module: {len(dir(agent))} exports")
-    print(f"✅ planner module: {len(dir(planner))} exports")
-    print(f"✅ tool_selector module: {len(dir(tool_selector))} exports")
-    print(f"✅ workflow module: {len(dir(workflow))} exports")
-
-    # Check specific protocols
-    from sage_libs.sage_agentic.interfaces.planner import Planner, PlanningContext
-
-    print(f"✅ Planner protocol: {Planner}")
-    print(f"✅ PlanningContext dataclass: {PlanningContext}")
+    print(f"✅ PlannerProtocol: {PlannerProtocol}")
+    print(f"✅ ToolSelectorProtocol: {ToolSelectorProtocol}")
+    print(f"✅ AgentProtocol: {AgentProtocol}")
+    print(f"✅ PlanRequest schema: {PlanRequest}")
+    print(f"✅ ToolSelectionQuery schema: {ToolSelectionQuery}")
 
     print()
 

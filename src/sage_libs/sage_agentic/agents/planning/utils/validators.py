@@ -5,7 +5,7 @@ Provides validation functions for plan steps, dependencies, and constraints.
 """
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
 from ..schemas import PlanRequest, PlanResult, PlanStep, ToolMetadata
 
@@ -129,7 +129,7 @@ def validate_step_count(steps: list[PlanStep], min_steps: int = 1, max_steps: in
     return True
 
 
-def validate_plan_result(result: PlanResult, request: Optional[PlanRequest] = None) -> bool:
+def validate_plan_result(result: PlanResult, request: PlanRequest | None = None) -> bool:
     """
     Validate a complete plan result.
 
@@ -237,7 +237,7 @@ def suggest_plan_improvements(steps: list[PlanStep]) -> list[str]:
                 suggestions.append(f"Step {step.id} is isolated (no dependencies or dependents)")
 
     # Check for very long dependency chains
-    def get_chain_length(step_id: int, visited: Optional[set[int]] = None) -> int:
+    def get_chain_length(step_id: int, visited: set[int] | None = None) -> int:
         if visited is None:
             visited = set()
         if step_id in visited:

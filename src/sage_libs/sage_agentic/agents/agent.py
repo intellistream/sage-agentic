@@ -5,9 +5,6 @@ import time
 
 import requests
 
-# Note: OpenAIClient should be injected from application layer to avoid L3 -> L4 dependency
-# from sage.middleware.operators.llm.clients.openaiclient import OpenAIClient
-
 
 class Tool:
     def __init__(self, name, func, description):
@@ -55,7 +52,7 @@ Thought:{agent_scratchpad}
 
 
 class BaseAgent:
-    def __init__(self, config, model=None, *, logger: logging.Logger | None = None, **_):
+    def __init__(self, config, model=None, *, logger: logging.Logger | None = None):
         """
         Initialize BaseAgent.
 
@@ -63,9 +60,7 @@ class BaseAgent:
             config: Configuration dict containing:
                 - search_api_key: API key for search tool
                 - max_steps: Maximum reasoning steps (default: 5)
-                - model_name, base_url, api_key: (deprecated) Use model parameter instead
-            model: LLM client instance (should be injected from L4/L5 layer to avoid dependency)
-                   If None, will try to create from config for backward compatibility
+            model: LLM client instance provided by application layer
             logger: Optional custom logger, defaults to module logger
         """
 
@@ -94,8 +89,7 @@ class BaseAgent:
             raise ValueError(
                 "Model parameter must be provided. "
                 "Example: agent = BaseAgent(config, model=your_llm_client). "
-                "This maintains proper architectural layering (L3 should not depend on L4). "
-                "Please inject an LLM client instance from sage.middleware.operators.llm.clients"
+                "This maintains proper architectural layering (L3 should not depend on L4/L5)."
             )
 
         self.max_steps = self.config.get("max_steps", 5)

@@ -5,7 +5,6 @@ Combines keyword and embedding-based selection strategies using score fusion.
 """
 
 import logging
-from typing import Optional
 
 from .base import BaseToolSelector, SelectorResources
 from .embedding_selector import EmbeddingSelector
@@ -69,7 +68,7 @@ class HybridSelector(BaseToolSelector):
         self._keyword_selector = KeywordSelector(keyword_config, resources)
 
         # Initialize embedding selector if client available
-        self._embedding_selector: Optional[EmbeddingSelector] = None
+        self._embedding_selector: EmbeddingSelector | None = None
         self._embedding_available = False
 
         if resources.embedding_client:

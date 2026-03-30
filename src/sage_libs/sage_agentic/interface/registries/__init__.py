@@ -3,34 +3,35 @@
 Registries allow implementations to register themselves at runtime.
 """
 
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 from ..protocols import BasePlanner, BaseToolSelector
 
-# Type aliases for factory functions
+# Factory type definitions
 PlannerFactory = Callable[..., BasePlanner]
 SelectorFactory = Callable[..., BaseToolSelector]
 
 
 class PlannerRegistry:
     """Registry for planner implementations.
-    
+
     Example:
         @PlannerRegistry.register("my_planner")
         class MyPlanner(BasePlanner):
             ...
-        
+
         planner = PlannerRegistry.create("my_planner", config=...)
     """
 
     _registry: dict[str, PlannerFactory] = {}
 
     @classmethod
-    def register(cls, name: str, factory: Optional[PlannerFactory] = None):
+    def register(cls, name: str, factory: PlannerFactory | None = None):
         """Register a planner implementation.
-        
+
         Can be used as decorator or called directly.
-        
+
         Args:
             name: Unique planner name
             factory: Factory function (class or callable)
@@ -46,14 +47,14 @@ class PlannerRegistry:
     @classmethod
     def create(cls, name: str, *args, **kwargs) -> BasePlanner:
         """Create a planner instance by name.
-        
+
         Args:
             name: Registered planner name
             *args, **kwargs: Arguments passed to factory
-            
+
         Returns:
             Planner instance
-            
+
         Raises:
             KeyError: If planner name not registered
         """
@@ -73,23 +74,23 @@ class PlannerRegistry:
 
 class SelectorRegistry:
     """Registry for tool selector implementations.
-    
+
     Example:
         @SelectorRegistry.register("my_selector")
         class MySelector(BaseToolSelector):
             ...
-        
+
         selector = SelectorRegistry.create("my_selector", config=...)
     """
 
     _registry: dict[str, SelectorFactory] = {}
 
     @classmethod
-    def register(cls, name: str, factory: Optional[SelectorFactory] = None):
+    def register(cls, name: str, factory: SelectorFactory | None = None):
         """Register a selector implementation.
-        
+
         Can be used as decorator or called directly.
-        
+
         Args:
             name: Unique selector name
             factory: Factory function (class or callable)
@@ -105,14 +106,14 @@ class SelectorRegistry:
     @classmethod
     def create(cls, name: str, *args, **kwargs) -> BaseToolSelector:
         """Create a selector instance by name.
-        
+
         Args:
             name: Registered selector name
             *args, **kwargs: Arguments passed to factory
-            
+
         Returns:
             Selector instance
-            
+
         Raises:
             KeyError: If selector name not registered
         """

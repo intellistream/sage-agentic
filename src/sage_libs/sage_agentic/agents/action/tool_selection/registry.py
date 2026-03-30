@@ -49,7 +49,7 @@ class SelectorRegistry:
         self._selectors[name] = selector_class
         logger.info(f"Registered selector: {name}")
 
-    def get_class(self, name: str) -> Optional[type[BaseToolSelector]]:
+    def get_class(self, name: str) -> type[BaseToolSelector] | None:
         """
         Get selector class by name.
 
@@ -64,8 +64,8 @@ class SelectorRegistry:
     def get(
         self,
         name: str,
-        config: Optional[SelectorConfig] = None,
-        resources: Optional[SelectorResources] = None,
+        config: SelectorConfig | None = None,
+        resources: SelectorResources | None = None,
         cache: bool = True,
     ) -> BaseToolSelector:
         """
@@ -152,8 +152,8 @@ def register_selector(name: str, selector_class: type[BaseToolSelector]) -> None
 
 def get_selector(
     name: str,
-    config: Optional[SelectorConfig] = None,
-    resources: Optional[SelectorResources] = None,
+    config: SelectorConfig | None = None,
+    resources: SelectorResources | None = None,
 ) -> BaseToolSelector:
     """
     Get selector instance from global registry.

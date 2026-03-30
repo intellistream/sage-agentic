@@ -4,7 +4,7 @@ Runtime Configuration Models
 Defines Pydantic models for configuring agent runtime components.
 """
 
-from typing import Any, Literal, Optional
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -43,7 +43,7 @@ class TelemetryConfig(BaseModel):
     enabled: bool = Field(default=True, description="Enable telemetry")
     collect_latency: bool = Field(default=True, description="Collect latency metrics")
     collect_accuracy: bool = Field(default=True, description="Collect accuracy metrics")
-    output_path: Optional[str] = Field(default=None, description="Path to save telemetry data")
+    output_path: str | None = Field(default=None, description="Path to save telemetry data")
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = Field(default="INFO")
 
 

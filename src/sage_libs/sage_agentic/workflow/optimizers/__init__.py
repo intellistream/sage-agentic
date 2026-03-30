@@ -8,7 +8,7 @@ Students can use these as starting points for their own research.
 """
 
 import time
-from typing import Any, Dict, Optional
+from typing import Any
 
 from ..base import BaseOptimizer, OptimizationResult, WorkflowGraph
 from ..constraints import ConstraintChecker

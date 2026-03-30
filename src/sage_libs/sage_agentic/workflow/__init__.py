@@ -27,8 +27,16 @@ Generation Example:
     >>> from sage_libs.sage_agentic.workflow import GenerationContext
     >>> from sage_libs.sage_agentic.workflow.generators import LLMWorkflowGenerator
     >>>
+    >>> def app_plan_generator(requirements, config):
+    ...     return {
+    ...         "pipeline": {"name": "demo", "description": ""},
+    ...         "source": {"class": "sage.libs.foundation.io.source.FileSource", "params": {}, "summary": ""},
+    ...         "stages": [],
+    ...         "sink": {"class": "sage.libs.foundation.io.sink.TerminalSink", "params": {}, "summary": ""},
+    ...     }
+    >>>
     >>> # Generate workflow from natural language
-    >>> generator = LLMWorkflowGenerator(model="gpt-4")
+    >>> generator = LLMWorkflowGenerator(model="gpt-4", plan_generator=app_plan_generator)
     >>> context = GenerationContext(
     ...     user_input="Create a RAG pipeline for document Q&A",
     ...     constraints={"max_cost": 100, "max_latency": 5.0}

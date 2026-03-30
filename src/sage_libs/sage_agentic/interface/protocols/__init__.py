@@ -4,11 +4,10 @@ Defines abstract interfaces using Python's Protocol and ABC.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Optional, Protocol
+from typing import Any, Protocol
 
 # Use absolute imports to avoid relative path confusion
 from sage_libs.sage_agentic.agents.action.tool_selection.schemas import (
-    SelectorConfig,
     ToolPrediction,
     ToolSelectionQuery,
 )
@@ -17,7 +16,7 @@ from sage_libs.sage_agentic.agents.planning.schemas import PlanRequest, PlanResu
 
 class PlannerProtocol(Protocol):
     """Protocol for planner implementations.
-    
+
     Planners generate step-by-step plans from high-level goals.
     """
 
@@ -25,10 +24,10 @@ class PlannerProtocol(Protocol):
 
     def plan(self, request: PlanRequest) -> PlanResult:
         """Generate a task plan from a request.
-        
+
         Args:
             request: PlanRequest containing goal, tools, and constraints
-            
+
         Returns:
             PlanResult with generated steps
         """
@@ -37,21 +36,21 @@ class PlannerProtocol(Protocol):
 
 class ToolSelectorProtocol(Protocol):
     """Protocol for tool selector implementations.
-    
+
     Selectors choose relevant tools for a given query/context.
     """
 
     name: str
 
     def select(
-        self, query: ToolSelectionQuery, top_k: Optional[int] = None
+        self, query: ToolSelectionQuery, top_k: int | None = None
     ) -> list[ToolPrediction]:
         """Select top-k relevant tools for the given query.
-        
+
         Args:
             query: Tool selection query
             top_k: Number of tools to select (overrides config if provided)
-            
+
         Returns:
             List of tool predictions, sorted by score (descending)
         """
@@ -60,17 +59,17 @@ class ToolSelectorProtocol(Protocol):
 
 class AgentProtocol(Protocol):
     """Protocol for agent implementations.
-    
+
     Agents orchestrate planning, tool selection, and execution.
     """
 
-    def run(self, query: str, context: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+    def run(self, query: str, context: dict[str, Any] | None = None) -> dict[str, Any]:
         """Execute agent logic for a query.
-        
+
         Args:
             query: User query or task description
             context: Optional context information
-            
+
         Returns:
             Result dictionary with answer, steps, etc.
         """
@@ -97,7 +96,7 @@ class BaseToolSelector(ABC):
 
     @abstractmethod
     def select(
-        self, query: ToolSelectionQuery, top_k: Optional[int] = None
+        self, query: ToolSelectionQuery, top_k: int | None = None
     ) -> list[ToolPrediction]:
         """Select relevant tools (must be implemented)."""
         ...
@@ -107,6 +106,6 @@ class BaseAgent(ABC):
     """Abstract base class for agents."""
 
     @abstractmethod
-    def run(self, query: str, context: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+    def run(self, query: str, context: dict[str, Any] | None = None) -> dict[str, Any]:
         """Execute agent logic (must be implemented)."""
         ...

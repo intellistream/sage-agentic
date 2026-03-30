@@ -18,19 +18,14 @@ def register_builtin_workflow_optimizers() -> None:
     # Import optimizer classes (all in optimizers/__init__.py)
     try:
         from sage_libs.sage_agentic.workflow.optimizers import (
-            NoOpOptimizer,
             GreedyOptimizer,
+            NoOpOptimizer,
             ParallelizationOptimizer,
         )
 
-        # Register no-op optimizer (baseline)
+        # Register no-op optimizer
         workflow_registry.register(
             "noop",
-            lambda **kwargs: NoOpOptimizer(**kwargs),
-        )
-        # Also register as "baseline" alias
-        workflow_registry.register(
-            "baseline",
             lambda **kwargs: NoOpOptimizer(**kwargs),
         )
         logger.debug("Registered NoOpOptimizer")
@@ -42,14 +37,9 @@ def register_builtin_workflow_optimizers() -> None:
         )
         logger.debug("Registered GreedyOptimizer")
 
-        # Register parallelization optimizer
+        # Register parallel optimizer
         workflow_registry.register(
             "parallel",
-            lambda **kwargs: ParallelizationOptimizer(**kwargs),
-        )
-        # Also register as "parallelization" alias
-        workflow_registry.register(
-            "parallelization",
             lambda **kwargs: ParallelizationOptimizer(**kwargs),
         )
         logger.debug("Registered ParallelizationOptimizer")

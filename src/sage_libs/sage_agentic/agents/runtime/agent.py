@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Generator
+from collections.abc import Generator
+from typing import Any
 
 from sage_libs.sage_agentic.agents.action.mcp_registry import MCPRegistry
 from sage_libs.sage_agentic.agents.planning.simple_llm_planner import SimpleLLMPlanner

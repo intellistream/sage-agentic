@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any, Optional, Protocol
 from .schemas import SelectorConfig, ToolPrediction, ToolSelectionQuery
 
 if TYPE_CHECKING:
-    from sage.common.components.sage_embedding.protocols import EmbeddingProtocol
+    from sagellm.embedding import EmbeddingProtocol
 
 logger = logging.getLogger(__name__)
 
@@ -31,8 +31,8 @@ class SelectorResources:
         self,
         tools_loader: Any,
         embedding_client: Optional["EmbeddingProtocol"] = None,
-        logger: Optional[logging.Logger] = None,
-        cache: Optional[Any] = None,
+        logger: logging.Logger | None = None,
+        cache: Any | None = None,
     ):
         """
         Initialize resources.
@@ -71,7 +71,7 @@ class ToolSelectorProtocol(Protocol):
         ...
 
     def select(
-        self, query: ToolSelectionQuery, top_k: Optional[int] = None
+        self, query: ToolSelectionQuery, top_k: int | None = None
     ) -> list[ToolPrediction]:
         """
         Select top-k relevant tools for the given query.
@@ -142,7 +142,7 @@ class BaseToolSelector(ABC):
         pass
 
     def select(
-        self, query: ToolSelectionQuery, top_k: Optional[int] = None
+        self, query: ToolSelectionQuery, top_k: int | None = None
     ) -> list[ToolPrediction]:
         """
         Select top-k relevant tools.

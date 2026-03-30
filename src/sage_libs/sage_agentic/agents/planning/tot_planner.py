@@ -17,7 +17,7 @@ import json
 import logging
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import Field
 
@@ -84,10 +84,10 @@ class ThoughtNode:
     thought: str
     score: float = 0.0
     children: list[ThoughtNode] = field(default_factory=list)
-    parent: Optional[ThoughtNode] = None
+    parent: ThoughtNode | None = None
     depth: int = 0
     step_index: int = 0  # Which step in the plan this represents
-    tool_id: Optional[str] = None  # Associated tool if any
+    tool_id: str | None = None  # Associated tool if any
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self):
@@ -556,7 +556,7 @@ Output JSON: {{"score": <0-10>, "reasoning": "brief explanation"}}"""
 
         return "\n".join(tool_strs)
 
-    def _format_progress(self, node: Optional[ThoughtNode]) -> str:
+    def _format_progress(self, node: ThoughtNode | None) -> str:
         """Format current progress for prompts."""
         if node is None:
             return ""

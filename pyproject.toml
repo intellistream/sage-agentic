@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "isage-agentic"
-version = "0.1.0.0"
+dynamic = ["version"]
 description = "SAGE Agentic Framework - Agent framework, planning, tool selection, and workflow"
 readme = "README.md"
 requires-python = ">=3.10"
-license = "MIT"
+license = { text = "MIT" }
 authors = [
     { name = "IntelliStream Team", email = "shuhao_zhang@hust.edu.cn" }
 ]
@@ -25,25 +25,21 @@ keywords = [
 dependencies = [
     "pydantic>=2.0.0",
     "typing-extensions>=4.0.0",
+    "jinja2>=3.1.0",
     "isage-libs>=0.2.0",
     "isage-intent>=0.1.0",
 ]
 
 [project.optional-dependencies]
+full = []
+
 dev = [
+    # dev includes [full] — no need for a separate extras install
+    "isage-agentic[full]",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
     "ruff>=0.8.4",
     "mypy>=1.0.0",
-]
-
-llm = [
-    "openai>=1.0.0",
-    "anthropic>=0.20.0",
-]
-
-full = [
-    "isage-agentic[dev,llm]",
 ]
 
 [project.urls]
@@ -52,6 +48,9 @@ Repository = "https://github.com/intellistream/sage-agentic"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+
+[tool.setuptools.dynamic]
+version = {attr = "sage_libs.sage_agentic._version.__version__"}
 
 [tool.setuptools.packages.find]
 where = ["src"]

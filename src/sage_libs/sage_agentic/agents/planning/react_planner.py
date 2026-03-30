@@ -19,7 +19,7 @@ Pattern:
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from jinja2 import Template
 from pydantic import Field
@@ -114,7 +114,7 @@ class ReActPlanner(BasePlanner):
     - Explicit reasoning traces for interpretability
     - Iterative refinement based on predicted observations
     - Graceful fallback when LLM unavailable
-    - Compatible with benchmark framework
+    - Integrates with benchmark framework
 
     Usage:
         >>> config = ReActConfig(max_iterations=10)
@@ -176,7 +176,7 @@ Generate the next step:"""
         self,
         config: PlannerConfig,
         llm_client: Any = None,
-        tool_selector: Optional[Any] = None,
+        tool_selector: Any | None = None,
         **kwargs: Any,
     ):
         """
@@ -185,7 +185,7 @@ Generate the next step:"""
         Args:
             config: Planner configuration (ReActConfig recommended)
             llm_client: LLM client for plan generation
-            tool_selector: Optional tool selector for fallback
+            tool_selector: Optional tool selector for auxiliary selection
             **kwargs: Additional arguments
         """
         super().__init__(config)
@@ -212,7 +212,7 @@ Generate the next step:"""
         cls,
         config: PlannerConfig,
         llm_client: Any = None,
-        tool_selector: Optional[Any] = None,
+        tool_selector: Any | None = None,
         **kwargs: Any,
     ) -> "ReActPlanner":
         """Create planner from configuration."""
@@ -291,7 +291,7 @@ Generate the next step:"""
         response: str,
         step_id: int,
         available_tools: list[str],
-    ) -> Optional[ReActStep]:
+    ) -> ReActStep | None:
         """Parse LLM response into ReActStep."""
         import json
         import re
@@ -533,6 +533,3 @@ Generate the next step:"""
             success=len(steps) > 0,
         )
 
-
-# Alias for compatibility
-ReActPlannerConfig = ReActConfig

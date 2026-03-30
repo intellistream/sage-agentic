@@ -4,7 +4,7 @@ Data schemas for tool selection.
 Defines Pydantic models for queries, predictions, and configurations.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -27,7 +27,7 @@ class ToolPrediction(BaseModel):
 
     tool_id: str = Field(..., description="Tool identifier")
     score: float = Field(..., ge=0.0, le=1.0, description="Relevance score (0-1)")
-    explanation: Optional[str] = Field(default=None, description="Optional explanation")
+    explanation: str | None = Field(default=None, description="Optional explanation")
     metadata: dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
     class Config:

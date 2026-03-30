@@ -1,11 +1,11 @@
-# Agent Runtime & Middleware Integration
+# Agent Runtime Integration
 
 Runtime infrastructure and middleware operators for agent execution, providing unified interfaces
 for tool selection, planning, and timing decisions with performance monitoring.
 
 ## Architecture
 
-```
+```text
 sage-libs/src/sage/libs/agentic/agents/runtime/
 ├── __init__.py           # Module exports
 ├── config.py             # Configuration models (RuntimeConfig, SelectorConfig, etc.)
@@ -14,12 +14,10 @@ sage-libs/src/sage/libs/agentic/agents/runtime/
 ├── telemetry.py          # Performance metrics collection
 └── configs/              # YAML configuration examples
 
-sage-middleware/src/sage/middleware/operators/agentic/
-├── __init__.py                     # Operator exports
-├── tool_selection_operator.py     # Tool selection operator
-├── planning_operator.py            # Planning operator
-├── timing_operator.py              # Timing decision operator
-└── configs/                        # Operator configuration examples
+application-layer/operators/agentic/  # Example app-layer wrappers
+├── tool_selection_operator.py
+├── planning_operator.py
+└── timing_operator.py
 ```
 
 ## Features
@@ -31,11 +29,11 @@ sage-middleware/src/sage/middleware/operators/agentic/
 - **BenchmarkAdapter**: Interface for connecting runtime to benchmark evaluation
 - **Telemetry**: Performance metrics collection and aggregation
 
-### Middleware Operators
+### Application Wrappers
 
-- **ToolSelectionOperator**: Wraps selector in middleware operator interface
-- **PlanningOperator**: Wraps planner in middleware operator interface
-- **TimingOperator**: Wraps timing decider in middleware operator interface
+- **ToolSelectionOperator**: Wraps selector in application operator interface
+- **PlanningOperator**: Wraps planner in application operator interface
+- **TimingOperator**: Wraps timing decider in application operator interface
 
 ## Quick Start
 
@@ -79,26 +77,26 @@ print(f"Avg latency: {metrics['avg_latency']:.3f}s")
 print(f"Success rate: {metrics['success_rate']:.2%}")
 ```
 
-### Using Middleware Operators
+### Using an Application-layer Operator Wrapper
 
 ```python
-from sage.middleware.operators.agentic import ToolSelectionOperator
+from sage.libs.agentic.agents.runtime import ToolSelectionAdapter, RuntimeConfig
 from your_selector import MySelector
 
-# Create operator
-operator = ToolSelectionOperator(
+# Create adapter
+adapter = ToolSelectionAdapter(
     selector=MySelector(),
-    config={
-        "selector": {"top_k": 5, "name": "embedding"},
-        "telemetry": {"enabled": True}
-    }
+    config=RuntimeConfig(
+        selector={"top_k": 5, "name": "embedding"},
+        telemetry={"enabled": True},
+    ),
 )
 
-# Use in pipeline
-predictions = operator(query)
+# Use in pipeline/app service
+predictions = adapter.run_tool_selection(query, top_k=5)
 
 # Access metrics
-metrics = operator.get_metrics()
+metrics = adapter.get_metrics()
 ```
 
 ### Loading from YAML Configuration
@@ -291,7 +289,7 @@ class BenchmarkAdapter:
     def reset(self) -> None
 ```
 
-### Middleware Operators
+### Application-layer Wrapper Examples
 
 ```python
 class ToolSelectionOperator(MapFunction):

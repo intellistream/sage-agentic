@@ -5,7 +5,7 @@ Provides unified scheduler for coordinating tool calls, planning execution,
 and workflow management.
 """
 
-from typing import Any, Optional, Protocol
+from typing import Any, Protocol
 
 from sage_libs.sage_agentic.agents.runtime.config import RuntimeConfig
 from sage_libs.sage_agentic.agents.runtime.telemetry import TelemetryCollector
@@ -46,10 +46,10 @@ class Orchestrator:
     def __init__(
         self,
         config: RuntimeConfig,
-        selector: Optional[ToolSelector] = None,
-        planner: Optional[Planner] = None,
-        timing_decider: Optional[TimingDecider] = None,
-        telemetry: Optional[TelemetryCollector] = None,
+        selector: ToolSelector | None = None,
+        planner: Planner | None = None,
+        timing_decider: TimingDecider | None = None,
+        telemetry: TelemetryCollector | None = None,
     ):
         """Initialize orchestrator.
 
@@ -66,7 +66,7 @@ class Orchestrator:
         self.timing_decider = timing_decider
         self.telemetry = telemetry or TelemetryCollector(config.telemetry)
 
-    def execute_tool_selection(self, query: Any, top_k: Optional[int] = None) -> list[Any]:
+    def execute_tool_selection(self, query: Any, top_k: int | None = None) -> list[Any]:
         """Execute tool selection with telemetry.
 
         Args:

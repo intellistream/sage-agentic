@@ -112,7 +112,7 @@ Agent evaluation capabilities:
 - Determinism testing
 - Telemetry and monitoring
 
-### 5. **Interfaces & Registry** (`interface/`, `interfaces/`, `registry/`)
+### 5. **Interfaces & Registry** (`interface/`, `registry/`)
 
 Unified interfaces and registration system for:
 - Planners
@@ -133,7 +133,7 @@ sage_agentic/
 ├── reasoning/             # Reasoning capabilities
 ├── eval/                  # Evaluation tools
 ├── interface/             # Protocol definitions
-├── interfaces/            # Interface implementations
+├── interface/             # Protocols, registries, schemas
 └── registry/              # Component registry
 ```
 

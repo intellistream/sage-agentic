@@ -13,7 +13,7 @@ Reference:
 import json
 import logging
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import Field
 
@@ -129,7 +129,7 @@ class GorillaSelector(BaseToolSelector):
 
         # Build tool index and cache tool metadata
         self._tool_docs: dict[str, RetrievedToolDoc] = {}
-        self._tool_embeddings: Optional[Any] = None
+        self._tool_embeddings: Any | None = None
         self._tool_ids: list[str] = []
         self._preprocess_tools()
 
@@ -232,7 +232,7 @@ class GorillaSelector(BaseToolSelector):
         return " ".join(parts)
 
     def _retrieve_candidates(
-        self, query: str, candidate_ids: Optional[set[str]], top_k: int
+        self, query: str, candidate_ids: set[str] | None, top_k: int
     ) -> list[RetrievedToolDoc]:
         """
         Retrieve candidate tools using embedding similarity.

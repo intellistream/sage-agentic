@@ -6,7 +6,6 @@ Common functions for loading Jinja2 templates across planners.
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 from jinja2 import Template
 
@@ -15,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 def load_template(
     template_name: str,
-    fallback_template: Optional[str] = None,
-    base_path: Optional[Path] = None,
+    fallback_template: str | None = None,
+    base_path: Path | None = None,
 ) -> Template:
     """
     Load a Jinja2 template from the prompt_templates directory.
